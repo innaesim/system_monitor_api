@@ -117,7 +117,7 @@ Returns battery percentage and charging state (if available).
 
 ```sh
 # Clone the repo
-git clone https://github.com/innaesim/system-monitor-api.git
+git clone https://github.com/innaesim/system_monitor_api.git
 cd system-monitor-api
 
 # Build the project
