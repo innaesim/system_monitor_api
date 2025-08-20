@@ -31,18 +31,10 @@ The API exposes RESTful endpoints that return real-time system metrics in **JSON
 
 ## 🔗 API Endpoints
 
-### System Info
-
-```
-GET /api/system/info
-```
-
-Returns OS details, uptime, and JVM info.
-
 ### CPU
 
 ```
-GET /api/system/cpu
+GET /api/v1/cpu/get
 ```
 
 Returns CPU model, cores, load, and frequency.
@@ -50,7 +42,7 @@ Returns CPU model, cores, load, and frequency.
 ### Memory
 
 ```
-GET /api/system/memory
+GET /api/v1/memory/get
 ```
 
 Returns total/available RAM and swap usage.
@@ -58,7 +50,7 @@ Returns total/available RAM and swap usage.
 ### Disk
 
 ```
-GET /api/system/disk
+GET /api/v1/disk/get
 ```
 
 Returns disk sizes, usage, and I/O stats.
@@ -66,7 +58,7 @@ Returns disk sizes, usage, and I/O stats.
 ### File System
 
 ```
-GET /api/system/filesystem
+GET /api/v1/disk/get
 ```
 
 Returns mounted partitions with total/used/free space.
@@ -74,7 +66,7 @@ Returns mounted partitions with total/used/free space.
 ### Network
 
 ```
-GET /api/system/network
+GET /api/v1/network/get
 ```
 
 Returns interfaces, MAC, IPs, speeds, RX/TX bytes.
@@ -82,26 +74,10 @@ Returns interfaces, MAC, IPs, speeds, RX/TX bytes.
 ### Processes
 
 ```
-GET /api/system/processes?limit=5&sort=cpu
+GET /api/v1/process/get
 ```
 
 Returns top processes by CPU or memory usage.
-
-### Sensors
-
-```
-GET /api/system/sensors
-```
-
-Returns CPU temperature, fan speeds, and voltage (if supported).
-
-### Battery
-
-```
-GET /api/system/battery
-```
-
-Returns battery percentage and charging state (if available).
 
 ---
 
@@ -133,17 +109,24 @@ The API will start on **[http://localhost:8080](http://localhost:8080)**
 
 ## 📊 Example Response
 
-**GET** `/api/system/cpu`
+**GET** `/api/v1/cpu/get`
 
 ```json
 {
-  "vendor": "Intel",
-  "model": "Core i7-10750H",
-  "logicalCores": 12,
-  "physicalCores": 6,
-  "frequencyGHz": 2.60,
-  "systemLoad": 12.5
-}
+		"systemLoad": 1.07470703125,
+		"processLoad": 0.17054263565891473,
+		"availableProcessors": 2,
+		"cpuUsagePercent": 11.733333333333333,
+		"userUsagePercent": 0,
+		"systemUsagePercent": 5.333333333333333,
+		"idlePercent": 17.066666666666666,
+		"perCoreUsage": [
+			18.085106382978726,
+			17.708333333333336,
+			13.541666666666666,
+			14.893617021276595
+		]
+	}
 ```
 
 ---
