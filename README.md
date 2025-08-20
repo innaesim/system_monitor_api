@@ -94,7 +94,7 @@ Returns top processes by CPU or memory usage.
 ```sh
 # Clone the repo
 git clone https://github.com/innaesim/system_monitor_api.git
-cd system-monitor-api
+cd system_monitor_api
 
 # Build the project
 mvn clean install
