@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pu/memory")
+@RequestMapping("/api/v1/memory")
 @Slf4j
 public class MemoryController {
     private final MemoryService memoryService;

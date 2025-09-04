@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ApiResponse<String> authenticate(@RequestBody() AuthRequest request) {
         var token = userService.authenticate(request);
         return new ApiResponse<>(200,
