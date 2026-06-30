@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sysmonitor-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: sysmonitor
+      MYSQL_USER: ${MYSQL_USER:-sysmonitor}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - sysmonitor-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sysmonitor-api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sysmonitor
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-sysmonitor}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-password}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@innaesim.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-password}
+      JWT_SECRET: ${JWT_SECRET:-u4FgxGbXJbwCkNgh7pYvLTMZG9m6Rkgc4iibtsfLE5CPK7n64Rj2vz9CAdPljUWv}
+      SERVER_PORT: 8085
+    ports:
+      - "8085:8085"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sysmonitor-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  sysmonitor-network:
+    driver: bridge
